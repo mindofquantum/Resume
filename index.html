@@ -3,194 +3,95 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Marcus Anderson — Software Developer</title>
-  <meta name="description" content="Animated resume — Marcus Anderson, Software Developer." />
+  <title>Marcus Anderson — Application Hub</title>
+  <meta name="description" content="Intro hub for Marcus Anderson's application mini-site. Links to animated resume and cover letter." />
+  <meta name="theme-color" content="#0b0f1a" />
   <style>
     :root {
-      --bg: #0b0f1a;
-      --bg-accent: #0f1526;
-      --text: #e8eefc;
-      --muted: #a7b0c3;
-      --primary: #7aa2ff;
-      --primary-2: #9bffd6;
-      --highlight: #ffcd70;
-      --card: rgba(255,255,255,0.06);
-      --card-border: rgba(255,255,255,0.12);
+      --bg: #0b0f1a; --bg-accent: #0f1526; --text: #e8eefc; --muted: #a7b0c3;
+      --primary: #7aa2ff; --primary-2: #9bffd6; --highlight: #ffcd70;
+      --card: rgba(255,255,255,0.06); --card-border: rgba(255,255,255,0.12);
       --shadow: 0 10px 30px rgba(0,0,0,0.35);
     }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--text);background:linear-gradient(135deg,var(--bg),var(--bg-accent));min-height:100svh;}
+    a{color:inherit;text-decoration:none}
 
-    body {
-      margin: 0;
-      font-family: 'Inter', system-ui, sans-serif;
-      color: var(--text);
-      background: var(--bg);
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
+    .wrap{max-width:1120px;margin:0 auto;padding:28px}
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:10px 0;margin-bottom:14px}
+    .brand{font-weight:800;letter-spacing:.4px}
+    .brand b{background:linear-gradient(90deg,var(--primary),var(--highlight));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 
-    /* Animated background with subtle shimmer */
-    .backdrop {
-      position: fixed; inset: 0; z-index: -1;
-      background: linear-gradient(135deg, var(--bg) 0%, var(--bg-accent) 100%);
-      overflow: hidden;
-    }
-    .backdrop::after {
-      content: "";
-      position: absolute; inset: 0;
-      background: linear-gradient(270deg, transparent, rgba(255,255,255,0.06), transparent);
-      animation: shimmer 12s linear infinite;
-    }
-    @keyframes shimmer {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
-    }
+    .hero{display:grid;grid-template-columns:1.2fr 1fr;gap:18px;align-items:center;margin-top:10px}
+    @media (max-width: 920px){.hero{grid-template-columns:1fr}}
+    .card{background:var(--card);border:1px solid var(--card-border);border-radius:20px;padding:26px;box-shadow:var(--shadow)}
+    .title{font-size:clamp(28px,4.2vw,48px);margin:0}
+    .lead{color:var(--muted);margin-top:8px}
 
-    .container { max-width: 1100px; margin: 0 auto; padding: 28px; }
+    .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:14px;border:1px solid var(--card-border);background:var(--card);box-shadow:var(--shadow);font-weight:700}
+    .btn.primary{background:linear-gradient(135deg,var(--primary),var(--primary-2));color:#06131b;border-color:transparent}
 
-    header.site {
-      text-align: center;
-      margin-bottom: 24px;
-      animation: fadeInDown 1.2s ease;
-    }
-    header.site h1 {
-      font-size: clamp(32px, 5vw, 56px);
-      background: linear-gradient(90deg, var(--primary), var(--highlight));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin: 0;
-    }
-    header.site .subtitle {
-      font-size: 18px;
-      color: var(--muted);
-      margin-top: 6px;
-    }
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    .mini{display:grid;gap:14px}
+    .mini .row{display:grid;gap:12px;grid-template-columns:1fr 1fr}
+    @media (max-width: 620px){.mini .row{grid-template-columns:1fr}}
 
-    .card {
-      background: var(--card);
-      border: 1px solid var(--card-border);
-      border-radius: 20px;
-      padding: 20px;
-      box-shadow: var(--shadow);
-      margin-bottom: 20px;
-      transform: translateY(20px);
-      opacity: 0;
-      transition: all 0.8s cubic-bezier(.2,.9,.2,1);
-    }
-    .card.revealed { transform: translateY(0); opacity: 1; }
+    .badge{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.08);border:1px solid var(--card-border);font-size:13px;font-weight:600}
 
-    h2 { margin-top: 0; font-size: 20px; border-left: 4px solid var(--primary); padding-left: 10px; }
-    h3 { margin: 8px 0; font-size: 16px; color: var(--highlight); }
-
-    .chip { background: rgba(255,255,255,0.08); border-radius: 999px; padding: 6px 12px; font-size: 13px; margin: 4px; display: inline-block; }
-
-    .progress { height: 8px; background: rgba(255,255,255,0.1); border-radius: 6px; margin-top: 4px; }
-    .bar { height: 100%; background: linear-gradient(90deg, var(--primary), var(--primary-2)); width: 0%; transition: width 1s ease; }
-
-    footer {
-      text-align: center;
-      color: var(--muted);
-      margin: 40px 0 20px;
-      font-size: 13px;
-    }
-
-    /* Glow hover */
-    a:hover, .chip:hover { color: var(--highlight); text-shadow: 0 0 6px var(--highlight); }
+    footer{color:var(--muted);text-align:center;margin:26px 0 10px;font-size:13px}
   </style>
 </head>
 <body>
-  <div class="backdrop"></div>
-  <div class="container">
-    <header class="site">
-      <h1>Marcus Anderson</h1>
-      <div class="subtitle">Software Developer • Dispatch Support Specialist @ Midco</div>
-    </header>
+  <div class="wrap">
+    <div class="nav">
+      <div class="brand"><b>Marcus</b> Anderson</div>
+      <div class="links"><a class="btn" href="resume.html">Resume</a><a class="btn" href="cover-letter.html">Cover Letter</a></div>
+    </div>
 
-    <section class="card resume-section" id="summary">
-      <h2>Professional Summary</h2>
-      <p>I’m a developer with experience in <strong>React.js</strong>, <strong>Node.js</strong>, <strong>HTML5</strong>, <strong>CSS3 (Tailwind)</strong>, and growing knowledge of <strong>C#/.NET</strong>. I focus on building tools and automations that streamline workflows and make teams more productive. My background includes technical support and field technician work, giving me a practical approach to solving real problems for users.</p>
-      <div>
-        <span class="chip">React.js</span><span class="chip">Node.js</span><span class="chip">HTML5</span><span class="chip">CSS3 / Tailwind</span><span class="chip">C#/.NET</span><span class="chip">SQL</span>
+    <section class="hero">
+      <div class="card">
+        <h1 class="title">Hi, I’m Marcus — thanks for visiting.</h1>
+        <p class="lead">This mini‑site includes an animated, printable resume and a concise cover letter tailored for the Software Developer role. Choose where you’d like to start:</p>
+        <div class="cta">
+          <a class="btn primary" href="resume.html">View Animated Resume</a>
+          <a class="btn" href="cover-letter.html">Read Cover Letter</a>
+        </div>
       </div>
-    </section>
-
-    <section class="card" id="skills">
-      <h2>Skills</h2>
-      <div>
-        <h3>Frontend</h3>
-        <div class="progress"><div class="bar" data-width="85"></div></div>
-        <h3>Backend</h3>
-        <div class="progress"><div class="bar" data-width="65"></div></div>
-        <h3>Databases</h3>
-        <div class="progress"><div class="bar" data-width="50"></div></div>
-        <h3>Workflow Automation</h3>
-        <div class="progress"><div class="bar" data-width="70"></div></div>
+      <div class="card mini">
+        <div class="row">
+          <div>
+            <h3 style="margin:0 0 6px">Highlights</h3>
+            <div class="badge">React.js & Node.js</div>
+            <div class="badge">HTML5/CSS3 (Tailwind)</div>
+            <div class="badge">C#/.NET (growing)</div>
+            <div class="badge">Basic SQL</div>
+          </div>
+          <div>
+            <h3 style="margin:0 0 6px">Recent</h3>
+            <div class="badge">Dispatch Support Specialist @ Midco</div>
+            <div class="badge">Built a provisioning Chrome Extension</div>
+            <div class="badge">WGU B.S. Software Engineering (in progress)</div>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <h3 style="margin:0 0 6px">Contact</h3>
+            <div class="badge">Sioux Falls, SD</div>
+            <div class="badge">marc.anderson@midco.com</div>
+            <div class="badge">(605) 370‑4038</div>
+          </div>
+          <div>
+            <h3 style="margin:0 0 6px">Quick Actions</h3>
+            <a class="btn" href="resume.html" style="width:max-content">Download Resume (Print)</a>
+            <a class="btn" href="cover-letter.html" style="width:max-content">Download Letter (Print)</a>
+          </div>
+        </div>
       </div>
-    </section>
-
-    <section class="card" id="projects">
-      <h2>Projects</h2>
-      <h3>Dispatch Chrome Extension</h3>
-      <ul>
-        <li>Automates provisioning data entry and reduces errors with API integrations.</li>
-        <li>Improves daily workflow speed for dispatch team.</li>
-        <li>Built with React and JavaScript, shipped iteratively with feedback.</li>
-      </ul>
-    </section>
-
-    <section class="card" id="experience">
-      <h2>Experience</h2>
-      <h3>Dispatch Support Specialist — Midco</h3>
-      <p><em>Sep 2023 – Present</em></p>
-      <ul>
-        <li>Created tools to streamline dispatch and provisioning tasks.</li>
-        <li>Developed and deployed Chrome Extension for provisioning automation.</li>
-      </ul>
-      <h3>Business Technician — Midco</h3>
-      <p><em>Sep 2023 – Present</em></p>
-      <ul>
-        <li>Installed and supported business-class services with reliability focus.</li>
-      </ul>
-      <h3>Residential Technician — Midco</h3>
-      <p><em>Mar 2021 – Sep 2023</em></p>
-      <ul>
-        <li>Installed and serviced residential internet, video, and voice equipment.</li>
-      </ul>
-    </section>
-
-    <section class="card" id="education">
-      <h2>Education</h2>
-      <h3>Western Governors University</h3>
-      <p>B.S. Software Engineering (In Progress) — Expected 2027</p>
-      <h3>Okoboji High School</h3>
-      <p>High School Diploma — 2006</p>
     </section>
 
     <footer>
-      © 2025 Marcus Anderson • HTML5/CSS3/JS Resume with animation & interactivity
+      © 2025 Marcus Anderson — Application Hub · <a href="resume.html">Resume</a> · <a href="cover-letter.html">Cover Letter</a>
     </footer>
   </div>
-
-  <script>
-    // Reveal on scroll
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if(e.isIntersecting){
-          e.target.classList.add('revealed');
-          const bars = e.target.querySelectorAll('.bar');
-          bars.forEach(b => {
-            const w = b.getAttribute('data-width');
-            b.style.width = w + '%';
-          });
-          io.unobserve(e.target);
-        }
-      });
-    }, {threshold:0.2});
-
-    document.querySelectorAll('.card').forEach(el => io.observe(el));
-  </script>
 </body>
 </html>

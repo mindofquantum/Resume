@@ -59,14 +59,49 @@
       <section class="card" id="skills">
         <h2>Skills</h2>
         <div>
-          <h3>Frontend</h3>
-          <div class="progress"><div class="bar" data-width="85"></div></div>
-          <h3>Backend</h3>
-          <div class="progress"><div class="bar" data-width="45"></div></div>
-          <h3>Databases</h3>
-          <div class="progress"><div class="bar" data-width="30"></div></div>
-          <h3>Willingness to Learn & Excel</h3>
-          <div class="progress"><div class="bar" data-width="100"></div></div>
+          <p class="scale">
+            <strong>Scale:</strong> 0-39 = Beginner • 40-69 = Intermediate • 70-100 = Advanced
+          </p>
+          <div class="skill-row">
+            <div class="skill-labels">
+              <span class="skill-name">Frontend</span>
+              <span class="level" data-for="frontend"></span>
+              <span class="percent" data-for="frontend"></span>
+            </div>
+            <div class="progress" aria-label="Frontend">
+              <div class="bar" data-width="75"></div>
+            </div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-labels">
+              <span class="skill-name">Backend</span>
+              <span class="level" data-for="backend"></span>
+              <span class="percent" data-for="backend"></span>
+            </div>
+            <div class="progress" aria-label="Backend">
+              <div class="bar" data-width="45"></div>
+            </div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-labels">
+              <span class="skill-name">Databases</span>
+              <span class="level" data-for="databases"></span>
+              <span class="percent" data-for="databases"></span>
+            </div>
+            <div class="progress" aria-label="Databases">
+              <div class="bar" data-width="30"></div>
+            </div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-labels">
+              <span class="skill-name">Willingness to Learn & Excel</span>
+              <span class="level" data-for="willingness"></span>
+              <span class="percent" data-for="willingness"></span>
+            </div>
+            <div class="progress" aria-label="Willingness to Learn & Excel">
+              <div class="bar" data-width="100"></div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -163,6 +198,30 @@
     </div>
 
     <script>
+      function levelFrom(pct) {
+        if (pct >= 70) return "Advanced";
+        if (pct >= 40) return "Intermediate";
+        return "Beginner";
+      }
+
+      document.querySelectorAll('.skill-row').forEach((row) => {
+        const bar = row.querySelector('.bar');
+        const pct = Number(bar.dataset.width) || 0;
+        const lvl = levelFrom(pct);
+
+        requestAnimationFrame(() => {
+          bar.style.width = pct + '%';
+        });
+
+        bar.classList.add('is-' + lvl.toLowerCase());
+
+        // Set level and percent text
+        const levelSpan = row.querySelector('.level');
+        const percentSpan = row.querySelector('.percent');
+        if (levelSpan) levelSpan.textContent = lvl;
+        if (percentSpan) percentSpan.textContent = `(${pct}%)`;
+      });
+
       const io = new IntersectionObserver(
         (e) => {
           e.forEach((x) => {
@@ -180,44 +239,7 @@
         { threshold: 0.2 }
       );
       document.querySelectorAll(".card").forEach((el) => io.observe(el));
-
-      document.querySelectorAll('.gallery-item').forEach(item => {
-        item.addEventListener('click', function() {
-          const modal = document.getElementById('gallery-modal');
-          const content = document.getElementById('gallery-content');
-          content.innerHTML = '';
-          if (item.dataset.type === 'img') {
-            const img = document.createElement('img');
-            img.src = item.src;
-            img.alt = item.alt;
-            img.style.maxWidth = '90vw';
-            img.style.maxHeight = '70vh';
-            img.style.borderRadius = '8px';
-            img.style.display = 'block';
-            img.style.margin = 'auto';
-            content.appendChild(img);
-          } else if (item.dataset.type === 'video') {
-            const iframe = document.createElement('iframe');
-            iframe.src = item.dataset.src;
-            iframe.width = '800';
-            iframe.height = '450';
-            iframe.frameBorder = '0';
-            iframe.allowFullscreen = true;
-            iframe.style.borderRadius = '8px';
-            iframe.style.maxWidth = '90vw';
-            iframe.style.maxHeight = '70vh';
-            iframe.style.display = 'block';
-            iframe.style.margin = 'auto';
-            content.appendChild(iframe);
-          }
-          modal.style.display = 'flex';
-        });
-      });
-      document.getElementById('gallery-close').onclick = function() {
-        document.getElementById('gallery-modal').style.display = 'none';
-        document.getElementById('gallery-content').innerHTML = '';
-      };
     </script>
   </body>
 </html>
-</html>
+
